@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react"
-import axios from "axios";
+import React, { useState } from "react"
+
+import useCourse from "../CustomHooks/useCourse";
 
 
 const Course = ({ match }) => {
 
-    const [course, setCourse] = useState({})
     const [comment, setComment] = useState("Sin comentarios")
+    const course = useCourse(match.params.id) 
 
-    useEffect(() => {   
-    axios.get(`https://my-json-server.typicode.com/UlisesCampos/JSON-server/cursos/${match.params.id}`)
-    .then(resp => setCourse(resp.data))
-   // eslint-disable-next-line 
-    }, [])
 
     const myComment = e => {
         setComment(e.target.value)
