@@ -1,9 +1,9 @@
 import React from "react"
 
 const Banner = () =>(
-    <div className="main-banner img-container l-section" id="main-banner">
-  <div className="ed-grid lg-grid-6">
-    <div className="lg-cols-4 lg-x-2">
+    <div className="main-banner img-container l-section diagonal third-color" id="main-banner">
+  <div className="ed-grid lg-grid-6 diagonal third-color">
+    <div className="lg-cols-4 lg-x-2 diagonal dark-color">
       <img className="main-banner__img" alt="banner" src="https://miro.medium.com/max/3840/1*vXjx4Y7EgQBwALkaeZJ0Cg.jpeg"/>
       <div className="main-banner__data s-center">
         <p className="t2 s-mb-0">Cursos de uliCode</p>

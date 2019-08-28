@@ -4,7 +4,7 @@ import withLoader from "../HOC/withLoader";
 
 const UsersGrid = ({users}) => (
 <div className="ed-grid">
-    <h1>Usuarios ☠☠☠</h1>
+    <h1>Usuarios </h1>
     <div className="ed-grid s-grid-2 m-grid-3 l-grid-4">
         {
             users.map(u => (
