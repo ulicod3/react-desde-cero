@@ -11,9 +11,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import History from "./Pages/History"
 import MainMenu from './Organisms/MainMenu'
 import Users from "./Pages/Users"
+import CoursesProvider from "./Context/CoursesProvider";
 
 const AppRoutes = () => (
-    <Router>
+   <CoursesProvider>
+        <Router>
     <MainMenu/>
     <Switch>
 <Route path="/" exact component={ Home }/>
@@ -31,6 +33,7 @@ const AppRoutes = () => (
 )}/>
 </Switch>
 </Router>
+   </CoursesProvider>
 )
 
 export default AppRoutes;
