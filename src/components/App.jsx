@@ -1,30 +1,16 @@
 import React from 'react';
 import AppRoutes from './AppRoutes';
+import { Provider } from "mobx-react"
 import '../styles/styles.scss'
-import CoursesProvider from "./Context/CoursesProvider";
-import CartProvider from "./Context/Cart/CartProvider";
+import CartStore from '../stores/CartStore';
+
 
 
 const App = () => (
     
-    <CoursesProvider>
-    <CartProvider>
+   <Provider CartStore={CartStore}>
     <AppRoutes />
-    </CartProvider>
-    </CoursesProvider>
-);
+    </Provider>
+)
+
 export default App;
-/*
-
-Estructura de un proyecto AtomicDesign
-srcComponents
-            -Atoms
-            -Moleculas
-            -Organismos
-            -Templates
-            -Pages
-src/Course/CoursePage.jsx
-src/Course/Course.jsx
-src/Course/CourseGrid.jsx
-
-*/

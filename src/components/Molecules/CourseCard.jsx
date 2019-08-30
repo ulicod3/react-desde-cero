@@ -1,49 +1,52 @@
-import React, { useContext } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from "react-router-dom"
-import CartContext from '../Context/Cart/CartContext';
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../Context/Cart/actions';
+import { inject, observer } from "mobx-react"
 
-const CourseCard = ({id, title, image, price, professor}) => {
+@inject("CartStore")
+@observer
 
-    const [state, dispatch] = useContext(CartContext)
+class CourseCard extends Component {
 
-    return (
-        <article className="card">
-            <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
-                <Link to={`/cursos/${id}`}>
-                    <img src={image} alt={title} />
-                </Link>
-            </div>
-            <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
-                <h3 className="center">{title}</h3>
-                <div className="s-main-center">
-                    { professor }
-                </div>
-                <div className="s-main-center">
-                    
-                    { state.cart.find(c => c === id) ?
-                        <button onClick={() => dispatch({
-                            type: REMOVE_FROM_CART,
-                            course: id
-                        })}
-                            className="button--ghost-alert button--tiny">
-                            Remover del carrito
-                        </button>
-                        :
-                        <button onClick={() => dispatch({
-                            type: ADD_TO_CART,
-                            course: id
-                        })} 
-                        className="button--ghost-alert button--tiny">
-                        { `$ ${price} USD`} 
-                        </button>
-                    }
-                </div>
-            </div>
-        </article>
-    )
-}
+    render() {
+    const {id, title, image, price, professor, CartStore} = this.props
+        return (  
+            
+    
+     <article className="card">
+        <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
+         <Link to={`/cursos/${id}`}>
+            <img src={image} alt={title} />
+         </Link>
+         </div>
+           <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
+           <h3 className="center">{title}</h3>
+         <div className="s-main-center">
+         { professor }
+          </div>
+      <div className="s-main-center">
+            {
+                CartStore.cart.find(c => c === id) ?
+                <button
+                onClick = { ()  => CartStore.removeFromCart(id)}
+                className="button--ghost-alert button--tiny">
+                    { `Remover del carrito`} 
+                    </button> 
+                :
+                <button
+                onClick = { ()  => CartStore.addToCart(id)}
+                className="button--ghost-alert button--tiny">
+                    { `$ ${price} USD`} 
+                    </button>     
+            }                      
+                         
+           </div>
+         </div>
+     </article>
+                )
+            }
+    }
+
 
 
 

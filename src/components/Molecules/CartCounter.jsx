@@ -1,13 +1,16 @@
-import React, { useContext } from "react"
-import CartContext from "../Context/Cart/CartContext";
+import React, { Component } from "react"
+import { observer, inject } from "mobx-react"
 
-const CartCounter = () => {
-    const [state] = useContext(CartContext)
-
+@inject("CartStore")
+@observer
+class CartCounter extends Component {
+  render() {
     return (
-        <span>Carrito: {state.cart.length} </span>
-    
+      <span>
+        Carrito: {this.props.CartStore.cart.length}
+      </span>
     )
-}
+  }
+} 
 
 export default CartCounter
