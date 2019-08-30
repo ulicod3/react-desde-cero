@@ -1,43 +1,51 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from "react-router-dom"
-import { addToCart, deleteFromCart} from '../../redux/actionCreators';
-import { connect } from "react-redux"
+import CartContext from '../Context/Cart/CartContext';
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../Context/Cart/actions';
 
-const CourseCard = ({id, title, image, price, professor, addCourseToCart, cart, deleteCourseFromCart}) => (
-    <article className="card">
-        <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
-            <Link to={`/cursos/${id}`}>
-                <img src={image} alt={title} />
-            </Link>
-        </div>
-        <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
-            <h3 className="center">{title}</h3>
-            <div className="s-main-center">
-                { professor }
+const CourseCard = ({id, title, image, price, professor}) => {
+
+    const [state, dispatch] = useContext(CartContext)
+
+    return (
+        <article className="card">
+            <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
+                <Link to={`/cursos/${id}`}>
+                    <img src={image} alt={title} />
+                </Link>
             </div>
-            <div className="s-main-center">
-            {
-                cart.find(a => a === id) 
-                ?
-                <button 
-                className="button--ghost-alert button--tiny"
-                onClick={() => deleteCourseFromCart(id)}
-                >Remover del carrito
-                </button>
-                  
-                :
-                <button
-                className="button--ghost-alert button--tiny"
-                onClick={() => addCourseToCart(id)}
-                >
-                    {`$ ${price} USD`} 
-                </button>
-            }
+            <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
+                <h3 className="center">{title}</h3>
+                <div className="s-main-center">
+                    { professor }
+                </div>
+                <div className="s-main-center">
+                    
+                    { state.cart.find(c => c === id) ?
+                        <button onClick={() => dispatch({
+                            type: REMOVE_FROM_CART,
+                            course: id
+                        })}
+                            className="button--ghost-alert button--tiny">
+                            Remover del carrito
+                        </button>
+                        :
+                        <button onClick={() => dispatch({
+                            type: ADD_TO_CART,
+                            course: id
+                        })} 
+                        className="button--ghost-alert button--tiny">
+                        { `$ ${price} USD`} 
+                        </button>
+                    }
+                </div>
             </div>
-        </div>
-    </article>
-)
+        </article>
+    )
+}
+
+
 
 CourseCard.propTypes = {
     title: PropTypes.string,
@@ -53,17 +61,4 @@ CourseCard.defaultProps = {
     profesor: ""
 }
 
-
-const mapStateToProps = state => ({
-    cart: state.cartReducer.cart
-})
-
-const mapDispatchToProps = dispatch =>({
-    addCourseToCart(id)  {
-        dispatch(addToCart(id))
-    },
-    deleteCourseFromCart(id) {
-        dispatch(deleteFromCart(id))
-    }
-})
-export default connect(mapStateToProps, mapDispatchToProps)(CourseCard)
+export default CourseCard
